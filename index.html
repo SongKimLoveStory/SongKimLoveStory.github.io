@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>결혼합니다</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="결혼합니다">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="imgs/dummy.png">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Swiper.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="falling-leaves" id="fallingLeaves" aria-hidden="true"></div>
+
+  <!-- ===== 1. 히어로 / 메인 비주얼 ===== -->
+  <section id="hero" class="section hero">
+    <div class="hero-decoration">&#10053;</div>
+    <p class="hero-date-label">WEDDING INVITATION</p>
+    <div class="hero-photo">
+      <img id="heroImg" src="" alt="커플 사진">
+    </div>
+    <h1 class="hero-names">
+      <span id="heroGroom" class="groom-name"></span>
+      <span class="heart">&#10084;</span>
+      <span id="heroBride" class="bride-name"></span>
+    </h1>
+    <p class="hero-date" id="heroDate"></p>
+    <p class="hero-venue" id="heroVenue"></p>
+    <div class="scroll-indicator">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ===== 2. 인사말 & 혼주 정보 ===== -->
+  <section id="greeting" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">초대합니다</h2>
+      <div class="divider"></div>
+      <p class="greeting-text" id="greetingText"></p>
+      <div class="parents-info" id="parentsInfo"></div>
+      <div class="contact-buttons" id="contactButtons"></div>
+    </div>
+  </section>
+
+  <!-- ===== 3. 캘린더 / D-Day ===== -->
+  <section id="calendar" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">Wedding Day</h2>
+      <div class="divider"></div>
+      <div class="calendar-widget"></div>
+      <p class="dday-counter">
+        결혼식까지 <strong class="dday-number">D-??</strong>
+      </p>
+      <div class="calendar-save-buttons">
+        <a href="#" id="btn-google-cal" class="btn btn-outline" target="_blank" rel="noopener">Google 캘린더에 저장</a>
+        <a href="#" id="btn-ics-download" class="btn btn-outline">캘린더 파일 다운로드 (.ics)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. 포토 갤러리 ===== -->
+  <section id="gallery" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">갤러리</h2>
+      <div class="divider"></div>
+      <div class="gallery-grid"></div>
+    </div>
+    <div class="gallery-overlay" id="galleryOverlay">
+      <button class="gallery-close" id="galleryClose" aria-label="갤러리 닫기">&times;</button>
+      <div class="swiper gallery-swiper" id="gallerySwiper">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. 오시는 길 ===== -->
+  <section id="location" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">오시는 길</h2>
+      <div class="divider"></div>
+      <div class="venue-info">
+        <p class="venue-name" id="venueName"></p>
+        <p class="venue-address" id="venueAddress"></p>
+        <p class="venue-tel" id="venueTel"></p>
+      </div>
+      <!-- <div class="map-container">
+        <div class="map-placeholder">
+          <img src="imgs/dummy.png" alt="지도">
+          <p>지도 영역<br><small>Kakao/Naver Map API 키 설정 후 표시됩니다</small></p>
+        </div>
+      </div> -->
+      <div class="navi-buttons">
+        <a href="#" class="btn btn-navi" data-navi="naver" aria-label="네이버 지도">
+          <span class="navi-icon">N</span>네이버 지도
+        </a>
+        <a href="#" class="btn btn-navi" data-navi="kakao" aria-label="카카오맵">
+          <span class="navi-icon">K</span>카카오맵
+        </a>
+        <a href="#" class="btn btn-navi" data-navi="tmap" aria-label="티맵">
+          <span class="navi-icon">T</span>티맵
+        </a>
+      </div>
+      <div class="transport-info" id="transportContent"></div>
+    </div>
+  </section>
+
+  <!-- ===== 6. 마음 전하실 곳 (축의금) ===== -->
+  <section id="account" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">마음 전하실 곳</h2>
+      <div class="divider"></div>
+      <p class="account-desc">축하의 마음을 전해주세요.</p>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="groom">신랑측</button>
+        <button class="tab-btn" data-tab="bride">신부측</button>
+      </div>
+      <div class="tab-content active" id="tab-groom"></div>
+      <div class="tab-content" id="tab-bride"></div>
+    </div>
+  </section>
+
+  <!-- ===== 8. 공유 / 푸터 ===== -->
+  <!-- <section id="share" class="section animate-on-scroll">
+    <div class="section-inner">
+      <h2 class="section-title">공유하기</h2>
+      <div class="divider"></div>
+      <div class="share-buttons">
+        <button class="btn btn-kakao" id="btn-kakao-share">
+          <span class="kakao-icon">K</span>카카오톡 공유
+        </button>
+        <button class="btn btn-link-copy" id="btn-link-copy">
+          <span class="link-icon">&#128279;</span>링크 복사
+        </button>
+      </div>
+    </div>
+  </section> -->
+
+  <footer class="footer">
+    <p id="footerNames"></p>
+    <p class="footer-date" id="footerDate"></p>
+  </footer>
+
+  <div class="toast" id="toast">복사되었습니다</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Kakao SDK (API 키 설정 후 주석 해제) -->
+  <!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script> -->
+  <script src="js/main.js"></script>
+</body>
+</html>

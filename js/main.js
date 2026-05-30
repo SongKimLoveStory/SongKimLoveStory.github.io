@@ -582,9 +582,9 @@
           case 'kakao':
             window.open('https://map.kakao.com/link/to/' + encodeURIComponent(v.name) + ',' + v.lat + ',' + v.lng, '_blank');
             break;
-          case 'tmap':
-            window.open('https://apis.openapi.sk.com/tmap/app/routes?appKey=&name=' + encodeURIComponent(v.name) + '&lon=' + v.lng + '&lat=' + v.lat, '_blank');
-            break;
+          // case 'tmap':
+          //   window.open('https://apis.openapi.sk.com/tmap/app/routes?appKey=&name=' + encodeURIComponent(v.name) + '&lon=' + v.lng + '&lat=' + v.lat, '_blank');
+          //   break;
         }
       });
     });

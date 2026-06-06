@@ -286,6 +286,24 @@ img {
    =========================== */
 #greeting {
   background: var(--bg-section);
+  position: relative;
+  overflow: hidden;
+}
+
+.greeting-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#greeting .section-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .greeting-text {
@@ -519,6 +537,9 @@ img {
   display: none;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gallery-overlay.active {

@@ -354,7 +354,8 @@
       if (!thumb) return;
       gallerySwiper.slideToLoop(parseInt(thumb.getAttribute('data-index'), 10), 0);
       overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = '';
+      gallerySwiper.update();
     });
 
     closeBtn.addEventListener('click', function () {

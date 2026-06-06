@@ -60,5 +60,9 @@
 
   "heroPhoto": "imgs/teaser/HW_00811_crop.jpg",
 
+  "effects": {
+    "fallingLeaves": false
+  },
+
   "naverMapClientId": "le5f3b3i9m"
 }

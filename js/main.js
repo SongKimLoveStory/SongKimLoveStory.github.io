@@ -71,7 +71,13 @@
      --------------------------- */
   function initFallingLeaves() {
     var layer = document.getElementById('fallingLeaves');
-    if (!layer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var isEnabled = !INFO.effects || INFO.effects.fallingLeaves !== false;
+
+    if (!layer) return;
+    if (!isEnabled || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      layer.innerHTML = '';
+      return;
+    }
 
     var palette = ['#d85f4b', '#e99c61', '#f2c9a2', '#f5dfc4', '#c96f55'];
     var leafCount = window.innerWidth <= 480 ? 18 : 26;

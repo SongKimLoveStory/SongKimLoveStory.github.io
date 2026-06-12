@@ -59,6 +59,7 @@
   ],
 
   "heroPhoto": "imgs/teaser/HW_00811_crop.jpg",
+  "heroPhotoAsBackground": true,
 
   "effects": {
     "fallingLeaves": false

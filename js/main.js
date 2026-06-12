@@ -57,6 +57,11 @@
      렌더: 히어로
      --------------------------- */
   function renderHero() {
+    var heroEl = document.getElementById('hero');
+    if (heroEl) {
+      heroEl.classList.toggle('hero-bg-mode', INFO.heroPhotoAsBackground === true);
+    }
+
     document.getElementById('heroImg').src = INFO.heroPhoto;
     document.getElementById('heroGroom').textContent = INFO.groom.name;
     document.getElementById('heroBride').textContent = INFO.bride.name;
@@ -208,13 +213,15 @@
      렌더: 캘린더
      --------------------------- */
   function renderCalendar() {
-    var container = document.querySelector('.calendar-widget');
-    if (!container) return;
-
     var wedding = getWeddingDate();
     var year = wedding.getFullYear();
     var month = wedding.getMonth();
     var weddingDay = wedding.getDate();
+
+    renderDday(year, month, weddingDay);
+
+    var container = document.querySelector('.calendar-widget');
+    if (!container) return;
 
     var monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
     var title = document.createElement('p');
@@ -253,16 +260,6 @@
     }
     container.appendChild(grid);
 
-    // D-day
-    var ddayEl = document.querySelector('.dday-number');
-    if (ddayEl) {
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
-      var weddingDateOnly = new Date(year, month, weddingDay);
-      var diff = Math.ceil((weddingDateOnly - today) / (1000 * 60 * 60 * 24));
-      ddayEl.textContent = diff > 0 ? 'D-' + diff : diff === 0 ? 'D-Day' : 'D+' + Math.abs(diff);
-    }
-
     // Google Calendar
     var googleCalBtn = document.getElementById('btn-google-cal');
     if (googleCalBtn) {
@@ -283,6 +280,21 @@
         downloadICS(wedding);
       });
     }
+  }
+
+  function renderDday(year, month, weddingDay) {
+    var ddayEls = document.querySelectorAll('.dday-number');
+    if (!ddayEls.length) return;
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var weddingDateOnly = new Date(year, month, weddingDay);
+    var diff = Math.ceil((weddingDateOnly - today) / (1000 * 60 * 60 * 24));
+    var label = diff > 0 ? 'D-' + diff : diff === 0 ? 'D-Day' : 'D+' + Math.abs(diff);
+
+    Array.prototype.forEach.call(ddayEls, function (ddayEl) {
+      ddayEl.textContent = label;
+    });
   }
 
   function formatGoogleDate(date) {

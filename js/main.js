@@ -59,7 +59,13 @@
   function renderHero() {
     var heroEl = document.getElementById('hero');
     if (heroEl) {
-      heroEl.classList.toggle('hero-bg-mode', INFO.heroPhotoAsBackground === true);
+      var useBackgroundHero = INFO.heroPhotoAsBackground === true;
+      heroEl.classList.toggle('hero-bg-mode', useBackgroundHero);
+      if (useBackgroundHero) {
+        initHeroStableHeight(heroEl);
+      } else {
+        heroEl.style.removeProperty('--hero-stable-height');
+      }
     }
 
     document.getElementById('heroImg').src = INFO.heroPhoto;
@@ -69,6 +75,41 @@
     document.getElementById('heroVenue').textContent = INFO.venue.name + ' ' + INFO.venue.hall;
 
     document.title = '결혼합니다 - ' + INFO.groom.name + ' ♥ ' + INFO.bride.name;
+  }
+
+  function getViewportSize() {
+    if (window.visualViewport && window.visualViewport.width && window.visualViewport.height) {
+      return {
+        width: window.visualViewport.width,
+        height: window.visualViewport.height
+      };
+    }
+
+    return {
+      width: window.innerWidth || document.documentElement.clientWidth,
+      height: window.innerHeight || document.documentElement.clientHeight
+    };
+  }
+
+  function initHeroStableHeight(heroEl) {
+    if (heroEl.dataset.stableHeightReady === 'true') return;
+    heroEl.dataset.stableHeightReady = 'true';
+
+    var lastViewportWidth = 0;
+
+    function applyStableHeight(force) {
+      var viewport = getViewportSize();
+      if (!force && Math.abs(viewport.width - lastViewportWidth) < 1) return;
+
+      lastViewportWidth = viewport.width;
+      heroEl.style.setProperty('--hero-stable-height', Math.round(viewport.height) + 'px');
+    }
+
+    applyStableHeight(true);
+    window.addEventListener('resize', function () { applyStableHeight(false); });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', function () { applyStableHeight(false); });
+    }
   }
 
   /* ---------------------------

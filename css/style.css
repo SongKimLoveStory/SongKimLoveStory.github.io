@@ -222,6 +222,10 @@ img {
 }
 
 .hero.hero-bg-mode {
+  height: 100vh;
+  height: var(--hero-stable-height, 100svh);
+  min-height: 100vh;
+  min-height: var(--hero-stable-height, 100svh);
   overflow: hidden;
   background: #15120d;
 }

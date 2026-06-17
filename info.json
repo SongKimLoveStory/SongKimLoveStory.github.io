@@ -27,9 +27,8 @@
     "name": "서울대학교 교수회관 웨딩홀",
     "hall": "2층 단독홀",
     "address": "서울특별시 관악구 관악로 1, 서울대학교 교수회관",
-    "tel": "02-3285-2115",
-    "lat": 37.5665,
-    "lng": 126.9780
+    "kakaoMapKeyword": "서울대학교 교수회관 웨딩홀",
+    "tel": "02-3285-2115"
   },
 
   "transport": {
@@ -60,7 +59,8 @@
     "imgs/gallery/IMG_5295.JPG",
     "imgs/gallery/IMG_5310.JPG",
     "imgs/gallery/IMG_7919.JPG",
-    "imgs/gallery/IMG_3893.jpg"
+    "imgs/gallery/IMG_3893.jpg",
+    "imgs/gallery/IMG_5322.JPG"
   ],
 
   "heroPhoto": "imgs/teaser/HW_00811_crop.jpg",

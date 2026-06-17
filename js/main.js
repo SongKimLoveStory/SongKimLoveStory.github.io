@@ -484,19 +484,25 @@
     telEl.innerHTML = '<a href="tel:' + INFO.venue.tel + '">' + INFO.venue.tel + '</a>';
 
     // 네이버 지도 로드
-    if (INFO.naverMapClientId) {
+    var mapContainer = document.querySelector('.map-container');
+    if (INFO.naverMapClientId && mapContainer) {
       var script = document.createElement('script');
-      script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + INFO.naverMapClientId;
+      script.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + INFO.naverMapClientId + '&submodules=geocoder';
       script.onload = function () {
-        var mapContainer = document.querySelector('.map-container');
-        mapContainer.innerHTML = '<div id="naverMap" style="width:100%;aspect-ratio:4/3;"></div>';
-        var map = new naver.maps.Map('naverMap', {
-          center: new naver.maps.LatLng(INFO.venue.lat, INFO.venue.lng),
-          zoom: 16
-        });
-        new naver.maps.Marker({
-          position: new naver.maps.LatLng(INFO.venue.lat, INFO.venue.lng),
-          map: map
+        naver.maps.Service.geocode({ query: INFO.venue.address }, function (status, response) {
+          var address = response && response.v2 && response.v2.addresses && response.v2.addresses[0];
+          if (status !== naver.maps.Service.Status.OK || !address) return;
+
+          var position = new naver.maps.LatLng(address.y, address.x);
+          mapContainer.innerHTML = '<div id="naverMap" style="width:100%;aspect-ratio:4/3;"></div>';
+          var map = new naver.maps.Map('naverMap', {
+            center: position,
+            zoom: 16
+          });
+          new naver.maps.Marker({
+            position: position,
+            map: map
+          });
         });
       };
       document.head.appendChild(script);
@@ -684,10 +690,10 @@
             window.open('https://map.naver.com/v5/search/' + encodeURIComponent(v.address), '_blank');
             break;
           case 'kakao':
-            window.open('https://map.kakao.com/link/to/' + encodeURIComponent(v.name) + ',' + v.lat + ',' + v.lng, '_blank');
+            window.open('https://map.kakao.com/link/search/' + encodeURIComponent(v.kakaoMapKeyword || v.name || v.address), '_blank');
             break;
           // case 'tmap':
-          //   window.open('https://apis.openapi.sk.com/tmap/app/routes?appKey=&name=' + encodeURIComponent(v.name) + '&lon=' + v.lng + '&lat=' + v.lat, '_blank');
+          //   window.open('https://apis.openapi.sk.com/tmap/app/search?name=' + encodeURIComponent(v.name || v.address), '_blank');
           //   break;
         }
       });

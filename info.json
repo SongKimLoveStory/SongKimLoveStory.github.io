@@ -66,6 +66,13 @@
   "heroPhoto": "imgs/teaser/HW_00811_crop.jpg",
   "heroPhotoAsBackground": true,
 
+  "fontSizeControl": {
+    "min": 100,
+    "max": 150,
+    "step": 5,
+    "default": 125
+  },
+
   "effects": {
     "fallingLeaves": false
   },

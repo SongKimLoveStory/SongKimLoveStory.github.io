@@ -39,6 +39,7 @@
     initNaviButtons();
     initShare();
     initFallingLeaves();
+    initFontSizeControl();
   }
 
   /* ---------------------------
@@ -110,6 +111,73 @@
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', function () { applyStableHeight(false); });
     }
+  }
+
+  /* ---------------------------
+     전체 글자 크기 조절
+     --------------------------- */
+  function initFontSizeControl() {
+    var range = document.getElementById('fontSizeRange');
+    var storageKey = 'weddingInvitationFontSize';
+    var settings = getFontSizeSettings();
+    if (!range) return;
+
+    range.min = settings.min;
+    range.max = settings.max;
+    range.step = settings.step;
+    range.value = settings.defaultValue;
+
+    function applyFontSize(value) {
+      var size = Math.min(settings.max, Math.max(settings.min, parseInt(value, 10) || settings.defaultValue));
+      document.documentElement.style.setProperty('--font-scale', (size / 100).toFixed(2));
+      range.value = size;
+
+      try {
+        window.localStorage.setItem(storageKey, String(size));
+      } catch (err) {
+        // 저장이 막힌 브라우저에서는 현재 화면에만 적용합니다.
+      }
+    }
+
+    try {
+      var savedSize = window.localStorage.getItem(storageKey);
+      if (savedSize) {
+        range.value = savedSize;
+      }
+    } catch (err) {
+      // localStorage 접근이 막힌 경우 기본값을 사용합니다.
+    }
+
+    applyFontSize(range.value);
+    range.addEventListener('input', function () {
+      applyFontSize(range.value);
+    });
+  }
+
+  function getFontSizeSettings() {
+    var config = INFO.fontSizeControl || {};
+    var min = parseInt(config.min, 10);
+    var max = parseInt(config.max, 10);
+    var step = parseInt(config.step, 10);
+    var defaultValue = parseInt(config.default, 10);
+
+    if (!Number.isFinite(min)) min = 85;
+    if (!Number.isFinite(max)) max = 120;
+    if (!Number.isFinite(step) || step <= 0) step = 5;
+    if (max < min) {
+      var temp = min;
+      min = max;
+      max = temp;
+    }
+    if (!Number.isFinite(defaultValue)) defaultValue = 100;
+    defaultValue = Math.min(max, Math.max(min, defaultValue));
+
+    return {
+      min: min,
+      max: max,
+      step: step,
+      defaultValue: defaultValue
+    };
   }
 
   /* ---------------------------

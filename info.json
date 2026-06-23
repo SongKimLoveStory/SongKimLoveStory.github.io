@@ -68,9 +68,9 @@
 
   "fontSizeControl": {
     "min": 100,
-    "max": 150,
+    "max": 140,
     "step": 5,
-    "default": 125
+    "default": 120
   },
 
   "effects": {

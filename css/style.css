@@ -365,14 +365,13 @@ img {
 
 .font-size-mark {
   flex: 0 0 auto;
-  font-family: var(--font-serif);
   font-size: 0.72rem;
   color: var(--text-secondary);
   line-height: 1;
+  white-space: nowrap;
 }
 
 .font-size-mark-large {
-  font-size: 1rem;
   color: var(--accent);
 }
 

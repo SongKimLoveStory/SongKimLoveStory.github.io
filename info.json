@@ -70,7 +70,7 @@
     "min": 100,
     "max": 140,
     "step": 5,
-    "default": 120
+    "default": 100
   },
 
   "effects": {
